@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Booking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-section {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input, select {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #checkout-message {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flight Booking</h1>
+    
+    <div class="form-container">
+        <div class="form-section">
+            <label for="roblox-username">Roblox Username:</label>
+            <input type="text" id="roblox-username" required>
+        </div>
+
+        <div class="form-section">
+            <label for="discord-username">Discord Username:</label>
+            <input type="text" id="discord-username" required>
+        </div>
+
+        <div class="form-section">
+            <label for="departure-airport">Departure Airport:</label>
+            <input type="text" id="departure-airport" required>
+        </div>
+
+        <div class="form-section">
+            <label for="arrival-airport">Arrival Airport:</label>
+            <input type="text" id="arrival-airport" required>
+        </div>
+
+        <div class="form-section">
+            <label for="number-of-people">Number of People Joining:</label>
+            <input type="number" id="number-of-people" min="1" required>
+        </div>
+
+        <div class="form-section">
+            <label for="agree">Do you agree to not disturb the roleplay?</label>
+            <select id="agree" required>
+                <option value="">Select...</option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <div class="form-section">
+            <button onclick="nextQuestion()">Next Question</button>
+        </div>
+
+        <div class="form-section" style="display: none;">
+            <p>Don't bring any liquid on board unless you brought it, of course.</p>
+            <button onclick="checkout()">Checkout</button>
+        </div>
+    </div>
+
+    <div id="checkout-message" style="display: none;"></div>
+
+    <script>
+        let currentQuestion = 0;
+
+        function nextQuestion() {
+            const agree = document.getElementById('agree').value;
+            if (agree === "") {
+                alert("Please select an option.");
+                return;
+            }
+
+            const sections = document.querySelectorAll('.form-section');
+            sections[currentQuestion].style.display = 'none';
+            currentQuestion++;
+            if (currentQuestion < sections.length) {
+                sections[currentQuestion].style.display = 'block';
+            } else {
+                alert('No more questions.');
+            }
+        }
+
+        function checkout() {
+            const robloxUsername = document.getElementById('roblox-username').value;
+            const discordUsername = document.getElementById('discord-username').value;
+            const seatNumber = Math.floor(Math.random() * 100) + 1; // Assuming seat limit is 100
+            const numberOfPeople = document.getElementById('number-of-people').value;
+
+            document.getElementById('checkout-message').innerText = 
+                `${robloxUsername}, you are successfully booked in seat number ${seatNumber}. A confirmation email has been sent to your Discord: ${discordUsername}. Total passengers: ${numberOfPeople}.`;
+            document.getElementById('checkout-message').style.display = 'block';
+            // Here you would also update the flight creator page with the booking info
+        }
+    </script>
+</body>
+</html>
